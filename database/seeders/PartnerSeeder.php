@@ -15,7 +15,7 @@ class PartnerSeeder extends Seeder
         for($i = 1; $i <= 5; $i++){
             Partner::create([
                 'name' => $faker->company,
-                'logo_url' => '[https://placehold.co/200x200?text=Logo](https://placehold.co/200x200?text=Logo)+' . $i
+                'logo_url' => 'https://placehold.co/200x200?text=Logo+Partner+' . $i
             ]);
         }
     }

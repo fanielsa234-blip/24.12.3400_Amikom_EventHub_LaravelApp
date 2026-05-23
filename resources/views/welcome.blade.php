@@ -99,4 +99,25 @@
             @endforelse
         </div>
     </section>
+    <!-- SOAL 4 UTS: PARTNER SECTION -->
+    <section class="max-w-7xl mx-auto px-6 py-12 mb-20 border-t border-slate-200">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl font-extrabold text-slate-800">Didukung Oleh Partner Resmi</h2>
+            <p class="text-slate-500 font-medium mt-2">Berkolaborasi dengan instansi dan perusahaan terkemuka.</p>
+        </div>
+        
+        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 hover:opacity-100 transition-opacity duration-300">
+            @forelse($partners as $partner)
+                <div class="flex flex-col items-center gap-3 group">
+                    <div class="w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-white border border-slate-100 shadow-sm flex items-center justify-center p-4 group-hover:-translate-y-2 group-hover:shadow-xl transition-all duration-300">
+                        <!-- Memanggil gambar logo dari database -->
+                        <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }}" class="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300">
+                    </div>
+                    <span class="text-sm font-bold text-slate-500 group-hover:text-indigo-600 transition-colors">{{ $partner->name }}</span>
+                </div>
+            @empty
+                <p class="text-slate-400 font-medium italic">Belum ada partner yang ditambahkan.</p>
+            @endforelse
+        </div>
+    </section>
 @endsection

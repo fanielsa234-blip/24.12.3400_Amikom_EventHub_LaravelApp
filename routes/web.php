@@ -1,47 +1,47 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes - AmikomEventHub
+| Web Routes - AmikomEventHub (UTS Terpadu)
 |--------------------------------------------------------------------------
 */
-
-use App\Http\Controllers\EventController as PublicEventController;
 
 // ==========================================
 // RUTE USER / PENGUNJUNG UMUM (FRONTEND)
 // ==========================================
-Route::get('/', [PublicEventController::class, 'index'])->name('home');
-Route::get('/event/{id}', [PublicEventController::class, 'show'])->name('events.show');
-Route::get('/checkout/{id}', [PublicEventController::class, 'checkout'])->name('checkout');
-Route::get('/ticket/{id}', [PublicEventController::class, 'ticket'])->name('ticket');
-// Rute Baru: Halaman Tentang Kami
+Route::get('/', [\App\Http\Controllers\EventController::class, 'index'])->name('home');
+Route::get('/event/{id}', [\App\Http\Controllers\EventController::class, 'show'])->name('events.show');
+Route::get('/checkout/{id}', [\App\Http\Controllers\EventController::class, 'checkout'])->name('checkout');
+Route::get('/ticket/{id}', [\App\Http\Controllers\EventController::class, 'ticket'])->name('ticket');
+
+// Rute Halaman Tentang Kami (Penyelenggara)
 Route::get('/tentang', function () {
     return view('tentang');
 })->name('tentang');
-// Rute Baru: Halaman Bantuan / Cara Pesan
+
+// Rute Halaman Bantuan / Cara Pesan
 Route::get('/bantuan', function () {
     return view('bantuan');
 })->name('bantuan');
+
+
 // ==========================================
 // RUTE ADMINISTRATOR (BACKEND CRUD)
 // ==========================================
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     
     // Halaman Utama Dashboard Admin
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     
-    // RUTE RESOURCE UNTUK CRUD EVENT (Memanggil Controller di dalam folder Admin secara spesifik)
+    // CRUD Event Admin
     Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
     
-    // Halaman Kelola Kategori (Tugas Praktikum 3)
-    Route::get('/categories', function () {
-        return view('admin.categories.index');
-    })->name('categories.index');
+    // SOAL 1: CRUD Kategori Admin
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except(['create', 'show', 'edit']);
     
-    // RUTE RESOURCE UNTUK CRUD PARTNER (Tugas Praktikum 4)
+    // SOAL 2: CRUD Partner Admin
     Route::resource('partners', \App\Http\Controllers\Admin\PartnerController::class);
+    
 });

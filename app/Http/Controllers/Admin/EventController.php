@@ -3,89 +3,66 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    /**
-     * READ: Menampilkan daftar tabel manajemen event untuk Admin.
-     */
     public function index()
     {
-        $events = Event::with('category')->latest()->paginate(10);
+        $events = Event::with('category')->latest()->get();
         return view('admin.events.index', compact('events'));
     }
 
-    /**
-     * Menampilkan formulir tambah event baru.
-     */
     public function create()
     {
         $categories = Category::all();
         return view('admin.events.create', compact('categories'));
     }
 
-    /**
-     * CREATE: Menyimpan data event baru ke dalam database.
-     */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'category_id' => 'required',
-            'title'       => 'required|string|max:255',
-            'description' => 'required|string',
-            'date'        => 'required|date',
-            'location'    => 'required|string|max:255',
-            'price'       => 'required|numeric',
-            'stock'       => 'required|numeric'
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+            'date' => 'required|date',
+            'location' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:1',
         ]);
-
-        Event::create($data);
-
-        return redirect()->route('admin.events.index')
-                         ->with('success', 'Data Event berhasil ditambahkan.');
+        Event::create($request->all());
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil ditambahkan!');
     }
 
-    /**
-     * Menampilkan formulir edit/sunting event yang sudah ada.
-     */
-    public function edit(Event $event)
+    public function edit($id)
     {
+        $event = Event::findOrFail($id);
         $categories = Category::all();
         return view('admin.events.edit', compact('event', 'categories'));
     }
 
-    /**
-     * UPDATE: Memperbarui rincian data event di database.
-     */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'category_id' => 'required',
-            'title'       => 'required|string|max:255',
-            'description' => 'required|string',
-            'date'        => 'required|date',
-            'location'    => 'required|string|max:255',
-            'price'       => 'required|numeric',
-            'stock'       => 'required|numeric'
+        $event = Event::findOrFail($id);
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+            'date' => 'required|date',
+            'location' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:1',
         ]);
-
-        $event->update($data);
-
-        return redirect()->route('admin.events.index')
-                         ->with('success', 'Rincian data event berhasil diperbarui.');
+        $event->update($request->all());
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil diperbarui!');
     }
 
-    /**
-     * DELETE: Menghapus data event secara permanen dari database.
-     */
-    public function destroy(Event $event)
+    public function destroy($id)
     {
+        $event = Event::findOrFail($id);
         $event->delete();
-
-        return redirect()->route('admin.events.index')
-                         ->with('success', 'Data event berhasil dihapus secara permanen.');
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil dihapus!');
     }
 }
