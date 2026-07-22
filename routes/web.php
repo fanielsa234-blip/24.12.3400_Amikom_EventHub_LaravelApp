@@ -30,6 +30,17 @@ Route::get('/bantuan', function () {
 // ==========================================
 // RUTE ADMINISTRATOR (BACKEND CRUD)
 // ==========================================
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [AuthController::class, 'login'])->name('login.post');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('events', EventController::class);
+        Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    });
+});
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     
     // Halaman Utama Dashboard Admin
