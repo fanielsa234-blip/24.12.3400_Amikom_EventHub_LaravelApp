@@ -21,10 +21,22 @@
             <p class="text-[10px] font-bold uppercase tracking-widest text-indigo-400 mb-4 px-2">Main Menu</p>
     
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 {{ Request::is('admin') ? 'bg-indigo-800 text-white' : 'hover:bg-indigo-800 text-indigo-300 hover:text-white' }} rounded-xl font-bold transition">
-                Dashboard
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-indigo-300">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                </svg>
+            Dashboard
             </a>
             <a href="{{ route('admin.events.index') }}" class="flex items-center gap-3 px-4 py-3 {{ Request::is('admin/events*') ? 'bg-indigo-800 text-white' : 'hover:bg-indigo-800 text-indigo-300 hover:text-white' }} rounded-xl font-bold transition">
-                Kelola Event
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-indigo-300">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+            Kelola Event
             </a>
             
             <a href="{{ route('admin.categories.index') }}" class="flex items-center gap-3 px-4 py-3 {{ Request::is('admin/categories*') ? 'bg-indigo-800 text-white' : 'hover:bg-indigo-800 text-indigo-300 hover:text-white' }} rounded-xl font-bold transition">

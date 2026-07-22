@@ -13,10 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         // 1. Akun Admin Utama
         User::create([
-            'name' => 'Admin Amikom',
-            'email' => 'admin@amikom.ac.id',
+            'name'     => 'Admin Amikom',
+            'email'    => 'admin@amikom.ac.id',
             'password' => bcrypt('password'),
-            'role' => 'admin',
+            'role'     => 'admin',
         ]);
 
         // 2. Insert 3 Kategori (Syarat Latihan 4.5)

@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\TransactionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes - AmikomEventHub (UTS Terpadu)
@@ -30,6 +33,24 @@ Route::get('/bantuan', function () {
 // ==========================================
 // RUTE ADMINISTRATOR (BACKEND CRUD)
 // ==========================================
+Route::get('/login', function () {
+    return redirect()->route('admin.login');
+})->name('login');
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    // Route Login & Guest (Bebas Akses)
+    Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [AuthController::class, 'login'])->name('login.post');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Route Administrasi Terproteksi (Wajib Auth & Role Admin)
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('events', EventController::class);
+        Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    });
+
+});
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     
     // Halaman Utama Dashboard Admin
