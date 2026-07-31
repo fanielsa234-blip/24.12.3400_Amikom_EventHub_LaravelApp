@@ -1,68 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Ticket - {{ $event->title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
-</head>
-<body class="bg-indigo-600 text-white min-h-screen flex items-center justify-center p-6">
-    <div class="max-w-md w-full">
-        <!-- Success Banner -->
-        <div class="text-center mb-8">
-            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-white">
-                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h1 class="text-3xl font-black">Pembayaran Berhasil!</h1>
-            <p class="text-indigo-100 mt-2">Tiket Anda telah terbit dan siap digunakan.</p>
-        </div>
+@extends('layouts.app')
+@section('title', 'Cara Pesan & Bantuan - AmikomEventHub')
 
-        <!-- Ticket Card -->
-        <div class="bg-white text-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl relative">
-            <div class="p-8 bg-indigo-50 border-b-4 border-dashed border-indigo-100 text-center relative">
-                <p class="text-indigo-600 font-bold uppercase tracking-widest text-xs mb-2">E-Ticket Resmi</p>
-                <h2 class="text-2xl font-black leading-tight">{{ $event->title }}</h2>
-                <!-- Cutouts -->
-                <div class="absolute -left-4 -bottom-4 w-8 h-8 bg-indigo-600 rounded-full"></div>
-                <div class="absolute -right-4 -bottom-4 w-8 h-8 bg-indigo-600 rounded-full"></div>
-            </div>
-
-            <div class="p-8 space-y-8">
-                <div class="grid grid-cols-2 gap-6">
-                    <div>
-                        <p class="text-slate-400 text-xs font-bold uppercase mb-1">Nama Pembeli</p>
-                        <p class="font-bold text-lg">Alfiya Trisna (Eca)</p>
-                    </div>
-                    <div>
-                        <p class="text-slate-400 text-xs font-bold uppercase mb-1">Tanggal & Waktu</p>
-                        <p class="font-bold text-lg">{{ \Carbon\Carbon::parse($event->date)->format('d M, H:i') }}</p>
-                    </div>
-                    <div>
-                        <p class="text-slate-400 text-xs font-bold uppercase mb-1">Order ID</p>
-                        <p class="font-bold">{{ $orderId }}</p>
-                    </div>
-                    <div>
-                        <p class="text-slate-400 text-xs font-bold uppercase mb-1">Lokasi</p>
-                        <p class="font-bold">{{ $event->location }}</p>
-                    </div>
-                </div>
-
-                <div class="bg-slate-100 p-6 rounded-3xl flex flex-col items-center">
-                    <p class="text-slate-400 text-xs font-bold uppercase mb-4">Scan QR untuk Check-in</p>
-                    <div class="w-40 h-40 bg-white p-2 rounded-xl shadow-inner"><img src="[https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=](https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=){{ $orderId }}" alt="QR Code"></div>
-                    <p class="mt-4 font-mono font-bold text-slate-800">TKT-001293848</p>
-                </div>
-            </div>
-
-            <div class="px-8 pb-8">
-                <button onclick="window.print()" class="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition mb-4">
-                    Cetak / Simpan PDF
-                </button>
-                <a href="{{ route('home') }}" class="block text-center text-slate-500 font-bold hover:text-indigo-600">Kembali ke Beranda</a>
-            </div>
-        </div>
+@section('content')
+<main class="max-w-4xl mx-auto px-6 py-12 sm:py-20 animate-fade-in">
+    <!-- Header -->
+    <div class="text-center mb-12 sm:mb-16">
+        <span class="inline-block px-4 py-1.5 bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 border border-indigo-200 dark:border-indigo-800/60">Pusat Bantuan</span>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">Cara Pesan & FAQ</h1>
+        <p class="text-base sm:text-lg text-slate-500 dark:text-slate-400 mt-4 font-medium">Temukan jawaban untuk pertanyaan yang sering diajukan di sini.</p>
     </div>
-</body>
-</html>
+
+    <!-- Kotak FAQ -->
+    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200/80 dark:border-slate-800 space-y-6 transition-colors">
+        
+        <!-- Pertanyaan 1 -->
+        <details class="group border-b border-slate-100 dark:border-slate-800 pb-6" open>
+            <summary class="flex justify-between items-center font-extrabold cursor-pointer list-none text-lg sm:text-xl text-slate-900 dark:text-white">
+                Bagaimana cara memesan tiket event?
+                <span class="transition group-open:rotate-180 text-indigo-600 dark:text-indigo-400 text-2xl">▾</span>
+            </summary>
+            <div class="text-slate-600 dark:text-slate-300 mt-4 leading-relaxed font-medium space-y-2 text-xs sm:text-sm">
+                <p>Proses pemesanan tiket sangat mudah:</p>
+                <ol class="list-decimal list-inside ml-2 space-y-1">
+                    <li>Pilih event yang Anda inginkan di halaman utama (Katalog).</li>
+                    <li>Klik tombol <strong>"Lihat Detail"</strong> untuk membaca informasi acara.</li>
+                    <li>Klik tombol <strong>"Pesan Sekarang"</strong> dan isi data diri Anda.</li>
+                    <li>Lakukan pembayaran melalui simulasi sistem (GoPay / QRIS).</li>
+                    <li>E-Ticket akan langsung terbit dan siap digunakan!</li>
+                </ol>
+            </div>
+        </details>
+        
+        <!-- Pertanyaan 2 -->
+        <details class="group border-b border-slate-100 dark:border-slate-800 pb-6">
+            <summary class="flex justify-between items-center font-extrabold cursor-pointer list-none text-lg sm:text-xl text-slate-900 dark:text-white">
+                Apakah tiket yang sudah dibeli bisa dibatalkan (Refund)?
+                <span class="transition group-open:rotate-180 text-indigo-600 dark:text-indigo-400 text-2xl">▾</span>
+            </summary>
+            <p class="text-slate-600 dark:text-slate-300 mt-4 leading-relaxed font-medium text-xs sm:text-sm">
+                Sesuai dengan kebijakan AmikomEventHub, tiket yang sudah dibeli dan terverifikasi pembayarannya <strong>tidak dapat dibatalkan atau diuangkan kembali (non-refundable)</strong>, kecuali acara dibatalkan oleh pihak penyelenggara secara sepihak.
+            </p>
+        </details>
+
+        <!-- Pertanyaan 3 -->
+        <details class="group border-b border-slate-100 dark:border-slate-800 pb-6">
+            <summary class="flex justify-between items-center font-extrabold cursor-pointer list-none text-lg sm:text-xl text-slate-900 dark:text-white">
+                Bagaimana cara menggunakan E-Ticket saat acara?
+                <span class="transition group-open:rotate-180 text-indigo-600 dark:text-indigo-400 text-2xl">▾</span>
+            </summary>
+            <p class="text-slate-600 dark:text-slate-300 mt-4 leading-relaxed font-medium text-xs sm:text-sm">
+                E-Ticket yang Anda dapatkan setelah pembayaran akan memuat <strong>QR Code</strong> unik. Cukup tunjukkan E-Ticket tersebut (bisa dari layar HP atau dicetak) kepada panitia di pintu masuk (Check-in) pada hari H acara.
+            </p>
+        </details>
+
+    </div>
+
+    <!-- Kotak Hubungi Kami Bawah -->
+    <div class="mt-12 text-center">
+        <p class="text-slate-500 dark:text-slate-400 font-medium mb-4 text-xs sm:text-sm">Masih punya pertanyaan lain?</p>
+        <a href="mailto:support@amikom.ac.id" class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800 rounded-2xl font-extrabold hover:bg-indigo-600 dark:hover:bg-indigo-600 hover:text-white dark:hover:text-white transition-all text-xs sm:text-sm">
+            ✉️ Hubungi CS Kami
+        </a>
+    </div>
+</main>
+@endsection
