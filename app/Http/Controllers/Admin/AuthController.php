@@ -8,9 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // 1. Menampilkan halaman formulir login
+    // 1. Menampilkan halaman formulir login admin & organizer
     public function showLogin()
     {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->isOrganizer()) {
+                return redirect()->route('organizer.dashboard');
+            }
+            return redirect()->route('home');
+        }
         return view('auth.login');
     }
 
@@ -24,7 +33,22 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+            $user = Auth::user();
+
+            // Redirect berdasarkan role
+            if ($user->role === 'admin') {
+                return redirect()->intended(route('admin.dashboard'))->with('success', 'Selamat datang kembali, Superadmin!');
+            }
+
+            if ($user->isOrganizer()) {
+                $organizer = $user->organizer;
+                if ($organizer && $organizer->status === 'approved') {
+                    return redirect()->intended(route('organizer.dashboard'))->with('success', 'Selamat datang di Dashboard Organizer!');
+                }
+                return redirect()->route('organizer.pending');
+            }
+
+            return redirect()->intended(route('home'))->with('success', 'Berhasil masuk!');
         }
 
         return back()->withErrors([
