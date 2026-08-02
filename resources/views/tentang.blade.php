@@ -2,86 +2,51 @@
 @section('title', 'Tentang Kami - AmikomEventHub')
 
 @section('content')
-<main class="max-w-7xl mx-auto px-6 py-20 animate-fade-in">
-    <!-- Header Section -->
-    <div class="text-center max-w-3xl mx-auto mb-20">
-        <span class="inline-block px-4 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold uppercase tracking-wider mb-6">Tentang Kami</span>
-        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 text-slate-800">
-            Mendukung Ekosistem Digital <span class="text-indigo-600">Universitas AMIKOM</span>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-16">
+    <!-- Hero Section -->
+    <div class="text-center space-y-4 max-w-3xl mx-auto">
+        <span class="px-4 py-1.5 bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-extrabold uppercase tracking-widest border border-indigo-100 dark:border-indigo-800">
+            Tentang AmikomEventHub
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+            Platform Tiket Event Online <span class="text-indigo-600">Universitas AMIKOM</span>
         </h1>
-        <p class="text-lg text-slate-500 leading-relaxed font-medium">
-            AmikomEventHub adalah platform modern untuk menghubungkan mahasiswa, dosen, dan praktisi industri melalui berbagai kegiatan edukatif, teknologi, dan hiburan.
+        <p class="text-slate-500 dark:text-slate-400 text-sm sm:text-base font-medium leading-relaxed">
+            Menghubungkan mahasiswa dengan event, workshop, dan seminar kampus terbaik secara praktis, cepat, dan terintegrasi dengan Payment Gateway modern.
         </p>
     </div>
 
-    <!-- Konten Universitas Amikom -->
-    <div class="flex flex-col lg:flex-row gap-12 items-center mb-24">
-        <!-- Gambar Amikom (Kiri) -->
-        <div class="w-full lg:w-1/2 relative group">
-            <!-- Dekorasi Latar -->
-            <div class="absolute inset-0 bg-indigo-400 rounded-4xl mix-blend-multiply filter blur-2xl opacity-20 transform translate-x-4 translate-y-4 transition group-hover:opacity-30"></div>
-            
-            <!-- GAMBAR GEDUNG AMIKOM DARI FILE LOKAL -->
-            <!-- Jika gambar tidak muncul, pastikan nama file dan letaknya di public/assets/ sudah benar -->
-            <img src="{{ asset('assets/amikom.png') }}" alt="Gedung Amikom Yogyakarta" class="rounded-4xl shadow-xl relative z-10 w-full object-cover aspect-4/3 max-h-100">
+    <!-- Feature Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center text-2xl font-black">
+                🎟️
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Reservasi Praktis</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                Pesan tiket acara dalam hitungan detik tanpa perlu antre fisik di lokasi kampus.
+            </p>
         </div>
 
-        <!-- Box Visi Misi (Kanan, Dikecilkan) -->
-        <div class="w-full lg:w-1/2 flex flex-col gap-6">
-            <!-- Box Visi Kami -->
-            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition">
-                <div class="flex items-center gap-4 mb-3">
-                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-xl shadow-inner shrink-0">🎯</div>
-                    <h3 class="text-xl font-bold text-slate-800">Visi Kami</h3>
-                </div>
-                <p class="text-slate-500 leading-relaxed text-sm font-medium">Menjadi pusat informasi dan manajemen event kampus yang terintegrasi, memudahkan setiap mahasiswa untuk terus berkembang dan berjejaring di era digital.</p>
+        <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="w-12 h-12 bg-violet-100 dark:bg-violet-950 text-violet-600 dark:text-violet-400 rounded-2xl flex items-center justify-center text-2xl font-black">
+                💳
             </div>
-
-            <!-- Box Kolaborasi Industri -->
-            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition">
-                <div class="flex items-center gap-4 mb-3">
-                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl shadow-inner shrink-0">🚀</div>
-                    <h3 class="text-xl font-bold text-slate-800">Kolaborasi Industri</h3>
-                </div>
-                <p class="text-slate-500 leading-relaxed text-sm font-medium">Bekerja sama dengan berbagai partner industri dan organisasi kemahasiswaan untuk menghadirkan event bertaraf nasional maupun internasional.</p>
-            </div>
+            <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Midtrans Payment</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                Dukungan pembayaran lengkap via QRIS, GoPay, Bank Transfer, dan e-wallet secara aman.
+            </p>
         </div>
-    </div>
 
-    <!-- Penyelenggara Event Utama -->
-    <div class="bg-indigo-900 rounded-[3rem] p-10 md:p-16 text-white shadow-2xl relative overflow-hidden">
-        <!-- Dekorasi -->
-        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
-        <div class="absolute -left-10 -top-10 w-32 h-32 bg-indigo-400 opacity-20 rounded-full blur-2xl"></div>
-        
-        <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
-            <div class="shrink-0">
-                <div class="w-40 h-40 rounded-3xl bg-white p-4 shadow-2xl flex items-center justify-center transform rotate-3 hover:rotate-0 transition duration-300">
-                    <div class="text-center">
-                        <span class="text-4xl font-black text-indigo-900 tracking-tighter">AMIKOM</span>
-                        <span class="text-xs font-bold text-indigo-600 block uppercase tracking-widest mt-1">Yogyakarta</span>
-                    </div>
-                </div>
+        <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center text-2xl font-black">
+                🏢
             </div>
-            <div class="flex-1 text-center md:text-left space-y-4">
-                <span class="text-indigo-300 font-bold uppercase tracking-widest text-sm">Tentang Penyelenggara Utama</span>
-                <h2 class="text-3xl md:text-4xl font-black leading-tight">Universitas AMIKOM Yogyakarta</h2>
-                <p class="text-indigo-100 leading-relaxed max-w-3xl mt-4 text-lg font-light">
-                    Sebagai perguruan tinggi IT terkemuka di Indonesia yang berfokus pada ekonomi kreatif, Universitas AMIKOM Yogyakarta secara aktif mendukung pertumbuhan ekosistem digital. Melalui platform <strong>AmikomEventHub</strong>, kami hadir untuk memudahkan mahasiswa, dosen, dan masyarakat luas dalam mengakses berbagai kegiatan inovatif seperti seminar teknologi, workshop keahlian, dan kompetisi bergengsi.
-                </p>
-            </div>
+            <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Multi-Tenant Organizer</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                Setiap HIMA, UKM, dan Organisasi Mahasiswa memiliki portal mandiri untuk mengelola event & tiket.
+            </p>
         </div>
     </div>
 </main>
-
-<style>
-    /* Animasi sederhana agar web terlihat smooth saat dibuka */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-        animation: fadeIn 0.8s ease-out forwards;
-    }
-</style>
 @endsection

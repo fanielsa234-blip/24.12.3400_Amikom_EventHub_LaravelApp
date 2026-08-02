@@ -11,12 +11,11 @@ class IsAdmin
 {
     public function handle(Request $request, Closure $next): Response
     {
+        // Cek apakah user sudah login DAN role-nya adalah admin
         if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
         }
-
-        return redirect()->route('admin.login')->withErrors([
-            'email' => 'Akses ditolak! Halaman ini khusus untuk Admin.',
-        ]);
+        return redirect()->route('admin.login')->with
+        ('error', 'Akses ditolak! Anda harus login sebagai Admin terlebih dahulu.');
     }
 }
