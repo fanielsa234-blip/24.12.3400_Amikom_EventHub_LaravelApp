@@ -18,7 +18,7 @@ class ReviewController extends Controller
     {
         $request->validate([
             'rating'  => 'required|integer|min:1|max:5',
-            'comment' => 'nullable|string|max:1000',
+            'comment' => 'required|string|max:1000',
         ]);
 
         if (!Auth::check()) {
@@ -27,22 +27,22 @@ class ReviewController extends Controller
 
         $user = Auth::user();
 
-        // 1. Cek apakah tanggal acara sudah lewat
-        if (Carbon::parse($event->date)->isFuture()) {
+        // 1. Cek apakah tanggal acara sudah lewat (Superadmin dikecualikan untuk keperluan testing/demo UAS)
+        if ($user->role !== 'admin' && Carbon::parse($event->date)->isFuture()) {
             return back()->with('error', 'Ulasan hanya dapat diberikan setelah acara berlangsung.');
         }
 
-        // 2. Cek apakah user pernah membeli tiket event tersebut
+        // 2. Cek transaksi pembelian tiket
         $transaction = Transaction::where('event_id', $event->id)
             ->whereIn('status', ['success', 'settlement', 'pending'])
             ->where('customer_email', $user->email)
             ->first();
 
-        if (!$transaction) {
+        if ($user->role !== 'admin' && !$transaction) {
             return back()->with('error', 'Anda hanya dapat memberikan ulasan untuk event yang pernah Anda beli tiketnya.');
         }
 
-        // 3. Cek apakah user sudah pernah memberi ulasan untuk event ini (Mencegah Ulasan Ganda)
+        // 3. Cek apakah user sudah pernah memberi ulasan untuk event ini
         $existingReview = Review::where('user_id', $user->id)
             ->where('event_id', $event->id)
             ->first();
@@ -55,7 +55,7 @@ class ReviewController extends Controller
         Review::create([
             'user_id'        => $user->id,
             'event_id'       => $event->id,
-            'transaction_id' => $transaction->id,
+            'transaction_id' => $transaction->id ?? null,
             'rating'         => $request->rating,
             'comment'        => $request->comment,
         ]);

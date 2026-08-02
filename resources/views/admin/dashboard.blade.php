@@ -21,8 +21,8 @@
         </div>
     </header>
 
-    <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <!-- Responsive Stats Grid (1 col mobile, 2 col tablet, 4 col desktop) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm relative overflow-hidden transition-colors">
             <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mb-4">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -56,6 +56,52 @@
         </div>
     </div>
 
+    <!-- Quick Action Shortcuts (Bagian 2) -->
+    <div class="mb-10">
+        <h2 class="text-lg font-black text-slate-900 dark:text-white mb-4">Akses Cepat (Quick Actions)</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <a href="{{ route('admin.events.index') }}" class="p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-indigo-500 dark:hover:border-indigo-500 transition-all flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                    🎫
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-xs sm:text-sm text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Kelola Event</h4>
+                    <p class="text-[11px] text-slate-400">Buat & edit event</p>
+                </div>
+            </a>
+
+            <a href="{{ route('admin.transactions.index') }}" class="p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-emerald-500 dark:hover:border-emerald-500 transition-all flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                    💳
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-xs sm:text-sm text-slate-800 dark:text-slate-200 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Kelola Transaksi</h4>
+                    <p class="text-[11px] text-slate-400">Laporan & release</p>
+                </div>
+            </a>
+
+            <a href="{{ route('admin.organizers.index') }}" class="p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-amber-500 dark:hover:border-amber-500 transition-all flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-amber-50 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                    🏢
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-xs sm:text-sm text-slate-800 dark:text-slate-200 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Kelola Organizer</h4>
+                    <p class="text-[11px] text-slate-400">Verifikasi tenant</p>
+                </div>
+            </a>
+
+            <a href="{{ route('admin.partners.index') }}" class="p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm hover:border-purple-500 dark:hover:border-purple-500 transition-all flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-purple-50 dark:bg-purple-950/80 text-purple-600 dark:text-purple-400 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                    🤝
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-xs sm:text-sm text-slate-800 dark:text-slate-200 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Kelola Partner</h4>
+                    <p class="text-[11px] text-slate-400">Mitra sponsor</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <!-- Section Grafik Analitik (Chart.js) -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
         <!-- Grafik 1: Pertumbuhan User Terdaftar -->
@@ -68,6 +114,11 @@
                 <span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-lg">User Growth</span>
             </div>
             <div class="relative h-64">
+                @if(empty($chartUserData))
+                    <div class="absolute inset-0 flex items-center justify-center bg-slate-50/50 dark:bg-slate-950/50 rounded-2xl text-xs text-slate-400 font-semibold">
+                        📊 Belum ada data analitik user terdaftar
+                    </div>
+                @endif
                 <canvas id="userGrowthChart"></canvas>
             </div>
         </div>
@@ -82,6 +133,11 @@
                 <span class="px-3 py-1 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-lg">Multi-Tenant</span>
             </div>
             <div class="relative h-64">
+                @if(empty($chartEventData) && empty($chartOrganizerData))
+                    <div class="absolute inset-0 flex items-center justify-center bg-slate-50/50 dark:bg-slate-950/50 rounded-2xl text-xs text-slate-400 font-semibold">
+                        📊 Belum ada data analitik event & tenant
+                    </div>
+                @endif
                 <canvas id="tenantGrowthChart"></canvas>
             </div>
         </div>
@@ -96,6 +152,11 @@
                 <span class="px-3 py-1 bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 text-xs font-bold rounded-lg">Revenue Trend</span>
             </div>
             <div class="relative h-64">
+                @if(empty($chartRevenueData))
+                    <div class="absolute inset-0 flex items-center justify-center bg-slate-50/50 dark:bg-slate-950/50 rounded-2xl text-xs text-slate-400 font-semibold">
+                        💰 Belum ada data transaksi pendapatan
+                    </div>
+                @endif
                 <canvas id="revenueChart"></canvas>
             </div>
         </div>
@@ -131,10 +192,14 @@
                         </td>
                         <td class="px-6 py-4 font-medium text-slate-700 dark:text-slate-300">{{ $trx->event->title ?? '-' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @if($trx->status === 'settlement' || $trx->status === 'success')
+                            @if(in_array(strtolower($trx->status), ['settlement', 'success']))
                                 <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 rounded-lg text-xs font-bold uppercase border border-emerald-200 dark:border-emerald-800/60">Success</span>
-                            @elseif($trx->status === 'pending')
+                            @elseif(strtolower($trx->status) === 'pending')
                                 <span class="px-2.5 py-1 bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 rounded-lg text-xs font-bold uppercase border border-amber-200 dark:border-amber-800/60">Pending</span>
+                            @elseif(strtolower($trx->status) === 'needs_refund')
+                                <span class="px-2.5 py-1 bg-amber-500 text-white rounded-lg text-xs font-black uppercase">⚠️ Needs Refund</span>
+                            @elseif(strtolower($trx->status) === 'expired')
+                                <span class="px-2.5 py-1 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold uppercase">Expired</span>
                             @else
                                 <span class="px-2.5 py-1 bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 rounded-lg text-xs font-bold uppercase border border-rose-200 dark:border-rose-800/60">{{ $trx->status }}</span>
                             @endif
@@ -164,87 +229,93 @@
             const userLabels = @json($chartUserLabels ?? []);
             const userData = @json($chartUserData ?? []);
 
-            new Chart(document.getElementById('userGrowthChart'), {
-                type: 'line',
-                data: {
-                    labels: userLabels,
-                    datasets: [{
-                        label: 'Pengguna Baru',
-                        data: userData,
-                        borderColor: '#6366f1',
-                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { ticks: { color: textColor }, grid: { color: gridColor } },
-                        y: { ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true }
+            if (userLabels.length > 0) {
+                new Chart(document.getElementById('userGrowthChart'), {
+                    type: 'line',
+                    data: {
+                        labels: userLabels,
+                        datasets: [{
+                            label: 'Pengguna Baru',
+                            data: userData,
+                            borderColor: '#6366f1',
+                            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { ticks: { color: textColor }, grid: { color: gridColor } },
+                            y: { ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true }
+                        }
                     }
-                }
-            });
+                });
+            }
 
             // Data Tenant Growth
             const eventLabels = @json($chartEventLabels ?? []);
             const eventData = @json($chartEventData ?? []);
             const organizerData = @json($chartOrganizerData ?? []);
 
-            new Chart(document.getElementById('tenantGrowthChart'), {
-                type: 'bar',
-                data: {
-                    labels: eventLabels,
-                    datasets: [
-                        {
-                            label: 'Jumlah Event',
-                            data: eventData,
-                            backgroundColor: '#10b981',
-                            borderRadius: 6
-                        },
-                        {
-                            label: 'Organizer (Tenant)',
-                            data: organizerData,
-                            backgroundColor: '#3b82f6',
-                            borderRadius: 6
+            if (eventLabels.length > 0) {
+                new Chart(document.getElementById('tenantGrowthChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: eventLabels,
+                        datasets: [
+                            {
+                                label: 'Jumlah Event',
+                                data: eventData,
+                                backgroundColor: '#10b981',
+                                borderRadius: 6
+                            },
+                            {
+                                label: 'Organizer (Tenant)',
+                                data: organizerData,
+                                backgroundColor: '#3b82f6',
+                                borderRadius: 6
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { ticks: { color: textColor }, grid: { color: gridColor } },
+                            y: { ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true }
                         }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { ticks: { color: textColor }, grid: { color: gridColor } },
-                        y: { ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true }
                     }
-                }
-            });
+                });
+            }
 
             // Data Revenue Trend
             const revenueLabels = @json($chartRevenueLabels ?? []);
             const revenueData = @json($chartRevenueData ?? []);
 
-            new Chart(document.getElementById('revenueChart'), {
-                type: 'bar',
-                data: {
-                    labels: revenueLabels,
-                    datasets: [{
-                        label: 'Pendapatan (Rp)',
-                        data: revenueData,
-                        backgroundColor: '#f59e0b',
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { ticks: { color: textColor }, grid: { color: gridColor } },
-                        y: { ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true }
+            if (revenueLabels.length > 0) {
+                new Chart(document.getElementById('revenueChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: revenueLabels,
+                        datasets: [{
+                            label: 'Pendapatan (Rp)',
+                            data: revenueData,
+                            backgroundColor: '#f59e0b',
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { ticks: { color: textColor }, grid: { color: gridColor } },
+                            y: { ticks: { color: textColor }, grid: { color: gridColor }, beginAtZero: true }
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     </script>
 @endsection

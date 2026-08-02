@@ -43,7 +43,7 @@ class CheckoutController extends Controller
                 $orderId = 'TRX-' . time() . '-' . Str::random(4);
                 $totalPrice = $lockedEvent->price + 5000; // Harga Tiket + Biaya Admin Rp 5.000
 
-                // Rekam Transaksi ke Database (Status Pending + Expired 1 Menit KHUSUS TESTING)
+                // Rekam Transaksi ke Database (Status Pending + Expired 15 Menit)
                 return Transaction::create([
                     'event_id'       => $lockedEvent->id,
                     'order_id'       => $orderId,
@@ -52,7 +52,7 @@ class CheckoutController extends Controller
                     'customer_phone' => $request->customer_phone,
                     'total_price'    => $totalPrice,
                     'status'         => 'pending',
-                    'expired_at'     => now()->addMinutes(1), // KHUSUS TESTING (Ubah kembali ke 15 sebelum submit)
+                    'expired_at'     => now()->addMinutes(15), // Batas waktu pembayaran 15 Menit
                 ]);
             });
         } catch (Exception $e) {
@@ -74,6 +74,11 @@ class CheckoutController extends Controller
                 'first_name' => $transaction->customer_name,
                 'email'      => $transaction->customer_email,
                 'phone'      => $transaction->customer_phone,
+            ],
+            'expiry' => [
+                'start_time' => date('Y-m-d H:i:s O'),
+                'unit'       => 'minute',
+                'duration'   => 15,
             ],
         ];
 

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="space-y-6">
-    <!-- Header -->
+    <!-- Header Page -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
         <div>
             <h1 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Laporan Transaksi</h1>
@@ -12,10 +12,25 @@
         </div>
     </div>
 
+    <!-- Alert Success & Error Flash Messages -->
+    @if(session('success'))
+        <div class="p-4 bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 rounded-2xl text-xs sm:text-sm font-extrabold flex items-start gap-3 shadow-sm">
+            <span class="text-lg">✅</span>
+            <div class="leading-relaxed">{{ session('success') }}</div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="p-4 bg-rose-50 dark:bg-rose-950/80 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 rounded-2xl text-xs sm:text-sm font-extrabold flex items-start gap-3 shadow-sm">
+            <span class="text-lg">⚠️</span>
+            <div class="leading-relaxed">{{ session('error') }}</div>
+        </div>
+    @endif
+
     <!-- Table Card -->
     <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse min-w-[700px]">
+            <table class="w-full text-left border-collapse min-w-[750px]">
                 <thead class="bg-slate-50 dark:bg-slate-950/80 text-slate-500 dark:text-slate-400 uppercase text-[11px] font-black tracking-widest border-b border-slate-200 dark:border-slate-800">
                     <tr>
                         <th class="px-6 py-4">Kode TRX</th>
@@ -60,7 +75,7 @@
                                     </span>
                                 </div>
                             @elseif(strtolower($trx->status) === 'expired')
-                                <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold uppercase ring-1 ring-slate-200 dark:ring-slate-700">Expired</span>
+                                <span class="px-3 py-1 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold uppercase ring-1 ring-slate-300 dark:ring-slate-700">Expired</span>
                             @else
                                 <span class="px-3 py-1 bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 rounded-lg text-xs font-bold uppercase ring-1 ring-rose-200 dark:ring-rose-800/60">{{ $trx->status }}</span>
                             @endif

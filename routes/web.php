@@ -60,7 +60,17 @@ Route::get('/event/{id}', [\App\Http\Controllers\EventController::class, 'show']
 Route::get('/checkout/{id}', [\App\Http\Controllers\EventController::class, 'checkout'])->name('checkout');
 Route::get('/ticket/{id}', [\App\Http\Controllers\EventController::class, 'ticket'])->name('ticket');
 
-// Rute Halaman Tentang Kami & Bantuan
+// Rute Halaman Navbar (Profil, Katalog, Tentang Kami & Bantuan)
+Route::get('/profil', function () {
+    return view('profil');
+})->name('profil');
+
+Route::get('/katalog', function () {
+    $events = \App\Models\Event::with('category')->latest()->get();
+    $categories = \App\Models\Category::all();
+    return view('katalog', compact('events', 'categories'));
+})->name('katalog');
+
 Route::get('/tentang', function () {
     return view('tentang');
 })->name('tentang');
@@ -95,6 +105,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
         Route::resource('partners', PartnerController::class);
         Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
+        Route::post('transactions/release-expired', [TransactionController::class, 'releaseExpired'])->name('transactions.release-expired');
+        Route::post('transactions/{id}/expire', [TransactionController::class, 'simulateExpireSingle'])->name('transactions.expire-single');
         Route::get('organizers', [\App\Http\Controllers\Admin\OrganizerController::class, 'index'])->name('organizers.index');
         Route::patch('organizers/{organizer}/status', [\App\Http\Controllers\Admin\OrganizerController::class, 'updateStatus'])->name('organizers.updateStatus');
     });

@@ -48,19 +48,17 @@ class SocialiteController extends Controller
 
         if ($user) {
             $user->update([
-                'provider'    => 'google',
-                'provider_id' => $googleUser->getId(),
-                'avatar'      => $googleUser->getAvatar(),
+                'google_id' => $googleUser->getId(),
+                'avatar'    => $googleUser->getAvatar(),
             ]);
         } else {
             $user = User::create([
-                'name'        => $googleUser->getName() ?? 'Google User',
-                'email'       => $googleUser->getEmail(),
-                'provider'    => 'google',
-                'provider_id' => $googleUser->getId(),
-                'avatar'      => $googleUser->getAvatar(),
-                'role'        => $isOrganizerRegistration ? 'organizer' : 'user',
-                'password'    => null,
+                'name'      => $googleUser->getName() ?? 'Google User',
+                'email'     => $googleUser->getEmail(),
+                'google_id' => $googleUser->getId(),
+                'avatar'    => $googleUser->getAvatar(),
+                'role'      => $isOrganizerRegistration ? 'organizer' : 'user',
+                'password'  => bcrypt(Str::random(24)),
             ]);
         }
 
