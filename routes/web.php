@@ -1,14 +1,58 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/profil', [HomeController::class, 'profil']);
-Route::get('/bantuan', [HomeController::class, 'bantuan']);
-Route::get('/kontak', [HomeController::class, 'kontak']);
-Route::get('/katalog', [EventController::class, 'index']);
+/*
+|--------------------------------------------------------------------------
+| Web Routes - AmikomEventHub (UTS Terpadu)
+|--------------------------------------------------------------------------
+*/
 
-// Rute Admin Kategori (Tugas)
-Route::get('/admin/categories', [CategoryController::class, 'indexAdmin']);
+// ==========================================
+// RUTE USER / PENGUNJUNG UMUM (FRONTEND)
+// ==========================================
+Route::get('/', [\App\Http\Controllers\EventController::class, 'index'])->name('home');
+Route::get('/event/{id}', [\App\Http\Controllers\EventController::class, 'show'])->name('events.show');
+Route::get('/checkout/{id}', [\App\Http\Controllers\EventController::class, 'checkout'])->name('checkout');
+Route::get('/ticket/{id}', [\App\Http\Controllers\EventController::class, 'ticket'])->name('ticket');
+
+// Rute Halaman Tentang Kami (Penyelenggara)
+Route::get('/tentang', function () {
+    return view('tentang');
+})->name('tentang');
+
+// Rute Halaman Bantuan / Cara Pesan
+Route::get('/bantuan', function () {
+    return view('bantuan');
+})->name('bantuan');
+
+
+// ==========================================
+// RUTE ADMINISTRATOR (BACKEND CRUD)
+// ==========================================
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [AuthController::class, 'login'])->name('login.post');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('events', EventController::class);
+        Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    });
+});
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    
+    // Halaman Utama Dashboard Admin
+    Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    
+    // CRUD Event Admin
+    Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
+    
+    // SOAL 1: CRUD Kategori Admin
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except(['create', 'show', 'edit']);
+    
+    // SOAL 2: CRUD Partner Admin
+    Route::resource('partners', \App\Http\Controllers\Admin\PartnerController::class);
+    
+});
